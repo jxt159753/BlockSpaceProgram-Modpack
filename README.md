@@ -19,6 +19,26 @@ BlockSpaceProgram 是一个受《坎巴拉太空计划》启发的 Minecraft 整
 
 整合包尚未发布。模组清单、版本锁定、客户端包与服务端包的生成方式在 #1 中跟进。 [整合包清单、打包与发布 #1](https://github.com/jxt159753/BlockSpaceProgram-Modpack/issues/1)
 
+## Iris 光影
+
+包含 jxt159753/BlockSpaceProgram#52 修复的版本会在光影合成后绘制天空、卫星相位和星球球面。地形光照和阴影仍由光影包绘制。光影包自己的云和天空特效可能被覆盖。 [天空渲染兼容 Iris](https://github.com/jxt159753/BlockSpaceProgram/issues/52)
+
+卫星维度 `blockspaceprogram:moon` 默认使用光影包的主世界程序。天空是黑色，远处地形仍可能带有大气雾。用下列配置让卫星走末地程序并关闭距离雾。末地程序会改变月面的光照和色调。
+
+1. 在游戏实例的 `shaderpacks/` 目录复制一份光影包 ZIP。
+2. 编辑副本内的 `shaders/dimension.properties`。在现有的 `dimension.world1` 行末加一个空格和 `blockspaceprogram:moon`。保留该行原有的末地 ID。
+3. 在 ZIP 旁边编辑同名的 `.txt` 配置，例如 `我的光影.zip.txt`。更新下表列出的选项，其他选项沿用原值。
+4. 在 Iris 中选中修改后的光影包并应用。 [Iris 维度映射](https://shaders.properties/current/reference/miscellaneous/dimension_properties/)
+
+| 实测光影包 | 卫星去雾选项 |
+| --- | --- |
+| Complementary Reimagined r5.5.1 | `BORDER_FOG=false` |
+| BSL v10.1.3 | `FOG_DENSITY_END=0.00`、`FAR_VANILLA_FOG=1`（仅主世界）、`LIGHT_SHAFT_END_SMOKE=0.00` |
+
+母星的昼夜跟随轨道时钟。光影包用固定倾角计算太阳和阴影，即使赤道方向匹配，高纬度仍可能有偏差。BSL 的默认太阳倾角为 −40°，在赤道也可能偏离模组中的太阳。
+
+实测使用 Minecraft 1.21.1、NeoForge 21.1.267、Sable 2.0.6 专用服。客户端使用 Sodium 0.8.13 和 Iris 1.8.14-beta.1。 [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined) · [BSL 10.1.3](https://modrinth.com/shader/bsl-shaders/version/10.1.3)
+
 ## 许可证
 
 本仓库的配置、脚本、任务和数据包使用 MIT 许可证。整合包内的模组各自沿用原许可证，例如 Sable 使用 PolyForm Shield 1.0.0。整合包清单计划只引用各模组的官方下载，不在仓库或发布包中重新分发第三方 JAR。 [许可证](LICENSE)
